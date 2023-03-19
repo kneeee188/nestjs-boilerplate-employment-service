@@ -92,10 +92,11 @@ default nest.js doesn't have repository, but I think it is better seperating dat
 - ~~husky~~
 - ~~health checker~~
 - ~~config~~
+- error handler
 - jest setting - coverage setting
 - logger
+- validation
 - custom error
-- error handler
 - database, orm
 - inmemory
 - file upload
