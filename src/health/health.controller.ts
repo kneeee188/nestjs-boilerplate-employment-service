@@ -1,0 +1,20 @@
+import { Controller, Get, HttpCode } from '@nestjs/common';
+
+@Controller('health')
+export class HealthController {
+  @Get()
+  @HttpCode(200)
+  check() {
+    // () => this.typeOrmHealthIndicator.pingCheck('database'),
+    //   // the process should not use more than 300MB memory
+    //   () => this.memoryHealthIndicator.checkHeap('memory heap', 300 * 1024 * 1024),
+    //   // The process should not have more than 300MB RSS memory allocated
+    //   () => this.memoryHealthIndicator.checkRSS('memory RSS', 300 * 1024 * 1024),
+    //   // the used disk storage should not exceed the 50% of the available space
+    //   () => this.diskHealthIndicator.checkStorage('disk health', {
+    //     thresholdPercent: 0.5, path: '/'
+    //   }),
+    //   () => this.elasticsearchHealthIndicator.isHealthy('elasticsearch')
+    return 'Hello world';
+  }
+}

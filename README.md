@@ -90,8 +90,8 @@ default nest.js doesn't have repository, but I think it is better seperating dat
 - ~~lint~~
 - ~~prettier~~
 - ~~husky~~
+- ~~health checker~~
 - jest setting - coverage setting
-- health checker
 - logger
 - custom error
 - error handler
