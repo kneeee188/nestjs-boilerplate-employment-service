@@ -86,11 +86,12 @@ This layer has responsibility on database acceess
 
 default nest.js doesn't have repository, but I think it is better seperating database queries from service layer. and It is easier to test.
 
-## Initial setting check List
+# Initial setting check List
 - ~~lint~~
 - ~~prettier~~
 - ~~husky~~
 - ~~health checker~~
+- ~~config~~
 - jest setting - coverage setting
 - logger
 - custom error
@@ -99,7 +100,7 @@ default nest.js doesn't have repository, but I think it is better seperating dat
 - inmemory
 - file upload
 
-## Basic features
+# Basic features
 - Pagination boilerplate for typeorm.
 - File upload with S3
 - Boilerplate of Dto usage
