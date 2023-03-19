@@ -1,73 +1,111 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+... ING ...
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the basic boilerplate with Basic employment service like linkedin.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+# Basic folder structure
+```
+- src
+  - modules
+    - dtos
+      - create-employment.dto.ts
+      - update-employment.dto.ts
+      - ...
+    - entities
+      - employment.entity.ts
+      - employment-related-thing.entity.ts
+      - ...
+    - interfaces
+      - employment-entity.interface.ts
+      - employment-repository.interface.ts
+      - employment-service.interface.ts
+      - employment-controller.interface.ts
+      - employment-query-filter.interface.ts
+      - ...
+    - repositories
+      - employment.repository.ts
+      - employment-related-thing.repository.ts // depends on employment's data structure
+    - employment.controller.ts
+    - employment.service.ts
+    - employment.module.ts
+- test
+  - employment
+    - e2e
+      - employment.e2e.spec.ts
+    - unit
+      - employment-data-factory.spec.ts
+      - employment.repository.spec.ts
+      - employment-related-thing.repositoryspec..ts
+      - employment.controller.spec.ts
+      - employment.service.spec.ts
 ```
 
-## Running the app
+## Dto
+This layer have responsibilities on
+1. Get the input data from the client.
+2. Validate the input
+3. Change input to Entity
+- Key name change to entity can use.
+- Type change to entity can use.
+4. Change Entity to Dto
+- Key name change to the same as the name entered as input.
+- Set additional data / calculate datas which client needs.
+  - e.g. If database only has deadlineDate column, but client needs closed data, the dto calculages the closed data with deadlineDate.
 
-```bash
-# development
-$ npm run start
+In this file structure, It has the dependency of entity on the Dto layer. It could be bad. So you can have additional layer "Data mappers"(entity to dto, dto to entity). but I prefer to place mapper on dto.
 
-# watch mode
-$ npm run start:dev
+## Entities
+Database schemas is here.
 
-# production mode
-$ npm run start:prod
+## Interfaces
+All the types and interfaces is here.
+I prefer having seperate interfaces for all layers(service, repository). Nest.js recommends using class injection, but I make interfaces seperately and use "useClass" like below.
+
+nest.js recommendation.
+```ts
+@Module({
+  imports: [],
+  controllers: [EmploymentController],
+  providers: [EmploymentService],
+})
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+my personal perference
+```ts
+@Module({
+  imports: [],
+  controllers: [EmploymentController],
+  providers: [{
+    provide: IEmploymentService,  // I perfer this.
+    useClass: EmploymentService
+  }],
+})
 ```
 
-## Support
+## Repositories (DAO)
+This layer has responsibility on database acceess
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+default nest.js doesn't have repository, but I think it is better seperating database queries from service layer. and It is easier to test.
 
-## Stay in touch
+## Initial setting check List
+- lint
+- prettier
+- jest setting - coverage setting
+- husky
+- health checker
+- logger
+- custom error
+- error handler
+- database, orm
+- inmemory
+- file upload
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Basic features
+- Pagination boilerplate for typeorm.
+- File upload with S3
+- Boilerplate of Dto usage
+- Employment service
+  - Company uploads employment
+  - Company, Employee checks employments
+  - Company checkes applyments
+  - Employee apply employments
+  - Employee got the result of applyment from Company
