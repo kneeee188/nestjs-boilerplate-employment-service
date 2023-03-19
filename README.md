@@ -87,10 +87,10 @@ This layer has responsibility on database acceess
 default nest.js doesn't have repository, but I think it is better seperating database queries from service layer. and It is easier to test.
 
 ## Initial setting check List
-- lint
-- prettier
+- ~~lint~~
+- ~~prettier~~
+- ~~husky~~
 - jest setting - coverage setting
-- husky
 - health checker
 - logger
 - custom error
